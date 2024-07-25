@@ -104,7 +104,6 @@ androidx-vectordrawable = { module = "androidx.vectordrawable:vectordrawable", v
 app-update = { module = "com.google.android.play:app-update", version.ref = "appUpdate" }
 app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.ref = "appUpdateKtx" }
 balloon-compose = { module = "com.github.skydoves:balloon-compose", version.ref = "balloonCompose" }
-checkout = { module = "com.razorpay:checkout", version.ref = "checkout" }
 clevertap-android-sdk = { module = "com.clevertap.android:clevertap-android-sdk", version.ref = "clevertapAndroidSdk" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coilSvg" }
