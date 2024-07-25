@@ -115,7 +115,7 @@ android {
 
             resValue("string", "app_name", "MuGrocery Stage")
 
-            buildConfigField("String", "BFF_HOST", "\"https://api-staging.kpnfresh.com/\"")
+            buildConfigField("String", "BFF_HOST", "\"http://ec2-65-0-128-18.ap-south-1.compute.amazonaws.com:3000/\"")
             buildConfigField("String", "DATA_STORE_KEY", "\"KPN_APP_DATASTORE_STAGE\"")
 
         }
@@ -124,7 +124,7 @@ android {
         create("prod") {
             dimension = "kpn"
             resValue("string", "app_name", "MuGrocery")
-            buildConfigField("String", "BFF_HOST", "\"https://api.kpnfresh.com/\"")
+            buildConfigField("String", "BFF_HOST", "\"http://ec2-65-0-128-18.ap-south-1.compute.amazonaws.com:3000/\"")
             buildConfigField("String", "DATA_STORE_KEY", "\"KPN_APP_DATASTORE_PROD\"")
 
 

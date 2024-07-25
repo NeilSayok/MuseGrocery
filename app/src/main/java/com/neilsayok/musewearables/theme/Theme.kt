@@ -1,4 +1,4 @@
-package com.neilsayok.musewearables.ui.theme
+package com.neilsayok.musewearables.theme
 
 import android.app.Activity
 import android.os.Build
