@@ -121,10 +121,9 @@ class CategoryScreen(private val navController: NavHostController,
                 uiState.getCategories?.let { getCat ->
                     items(getCat) { category ->
                         CategoriesItem(category) { selectedCategory ->
-                            selectedCategory.categoryType?.let {
-                                onEvent(MainEvent.CategoryClick(it))
+                                onEvent(MainEvent.CategoryClick(selectedCategory))
                                 navController.navigate(Routes.PLPScreen.path)
-                            }
+
                         }
                     }
                 }

@@ -26,6 +26,6 @@ data class MainUIState(
     val getCategoriesByTypeResponse: MutableStateFlow<Resource<GetCategoryByTypeResponse>?> = MutableStateFlow(Resource()),
 
     //Flow Data
-    val selectedCategory : String = EMPTY_STRING
+    val selectedCategory : GetCategoriesResponseItem? = null
 
     )

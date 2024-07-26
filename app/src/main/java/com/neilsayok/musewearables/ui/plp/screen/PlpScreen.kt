@@ -31,6 +31,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import com.neilsayok.musewearables.base.Screen
+import com.neilsayok.musewearables.data.constants.EMPTY_STRING
 import com.neilsayok.musewearables.data.error.Resource
 import com.neilsayok.musewearables.theme.BackgroundColor
 import com.neilsayok.musewearables.theme.BorderColor
@@ -96,7 +97,7 @@ class PlpScreen(
                 )
         ) {
             Text(
-                text = "Vegetables",
+                text = uiState.selectedCategory?.categoryName?: EMPTY_STRING,
                 fontFamily = FontRoboto,
                 fontWeight = FontWeight.Medium,
                 fontSize = fontDimensionResource(
@@ -128,7 +129,6 @@ class PlpScreen(
                 uiState.getCategoriesByType?.let {getCategoriesByType->
                 items(getCategoriesByType) { catType->
                         PlpItem(catType)
-
                     }
 
                 }
