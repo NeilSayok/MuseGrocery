@@ -20,8 +20,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,17 +27,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
-import com.neilsayok.musewearables.R
 import com.neilsayok.musewearables.base.Screen
 import com.neilsayok.musewearables.theme.BackgroundColor
 import com.neilsayok.musewearables.theme.BorderColor
 import com.neilsayok.musewearables.ui.plp.components.PlpItem
 import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.fontDimensionResource
+import com.neilsayok.musewearables.viewmodel.MainEvent
+import com.neilsayok.musewearables.viewmodel.MainUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class PlpScreen(private val navController: NavHostController) : Screen() {
+class PlpScreen(
+    private val navController: NavHostController,
+    private val uiState: MainUIState,
+    private val onEvent: (MainEvent) -> Unit,
+) : Screen() {
     private val loadingState = MutableStateFlow(false)
 
     override fun setNavHost(): NavHostController = navController

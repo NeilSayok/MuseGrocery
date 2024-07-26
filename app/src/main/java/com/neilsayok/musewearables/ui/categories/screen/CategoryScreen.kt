@@ -36,10 +36,14 @@ import com.neilsayok.musewearables.ui.categories.components.CategoriesItem
 import com.neilsayok.musewearables.ui.plp.components.PlpItem
 import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.fontDimensionResource
+import com.neilsayok.musewearables.viewmodel.MainEvent
+import com.neilsayok.musewearables.viewmodel.MainUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class CategoryScreen(private val navController: NavHostController) : Screen() {
+class CategoryScreen(private val navController: NavHostController,
+                     private val uiState: MainUIState,
+                     private val onEvent: (MainEvent)->Unit,) : Screen() {
     private val loadingState = MutableStateFlow(false)
 
     override fun setNavHost(): NavHostController = navController

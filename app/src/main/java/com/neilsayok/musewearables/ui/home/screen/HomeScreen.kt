@@ -44,9 +44,16 @@ import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.FontSFPro
 import com.neilsayok.musewearables.utils.fontDimensionResource
 import com.neilsayok.musewearables.utils.showToast
+import com.neilsayok.musewearables.viewmodel.MainEvent
+import com.neilsayok.musewearables.viewmodel.MainUIState
 import kotlinx.coroutines.flow.StateFlow
 
-class HomeScreen(private val navHostController: NavHostController) : Screen() {
+class HomeScreen(
+    private val navHostController: NavHostController,
+    private val uiState: MainUIState,
+    private val onEvent: (MainEvent)->Unit,
+
+    ) : Screen() {
 
 
     override fun setNavHost(): NavHostController = navHostController
