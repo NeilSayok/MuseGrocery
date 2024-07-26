@@ -35,7 +35,7 @@ private val weightList by lazy {
 
 private val roboto by lazy { GoogleFont("Roboto") }
 
-val FontPrimary by lazy {
+val FontRoboto by lazy {
     FontFamily(
         weightList.map { weight ->
             androidx.compose.ui.text.googlefonts.Font(

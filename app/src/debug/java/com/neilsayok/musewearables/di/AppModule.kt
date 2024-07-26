@@ -4,7 +4,6 @@ import android.content.Context
 import com.facebook.flipper.android.AndroidFlipperClient
 import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
-import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.neilsayok.musewearables.BuildConfig
 import com.neilsayok.musewearables.data.model.ErrorEventData
 import com.neilsayok.musewearables.data.model.Resource

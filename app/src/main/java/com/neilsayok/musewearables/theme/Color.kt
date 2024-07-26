@@ -14,4 +14,9 @@ val SecondaryButtonColor = Color(0xFFF6F5F5)
 
 val FontColorLight = Color(0xFF9586A8)
 
+val BackgroundColor = Color(0xFFF6F5F5)
+val BorderColor = Color(0xFFD0D0D0)
+
+
+
 

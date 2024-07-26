@@ -132,103 +132,69 @@ android {
     }
 }
 
-dependencies {
 
+dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.legacy.support.v4)
-    implementation(libs.androidx.vectordrawable)
-
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-
-    implementation(libs.livedata)
-    implementation(libs.viewmodel)
-
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-
-    implementation(libs.androidx.multidex)
-
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.stetho.okhttp3)
-    implementation(libs.review.ktx)
-    implementation(libs.compose.theme.adapter)
-    implementation(libs.grid)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.ui)
-    implementation(libs.androidx.animation)
-    implementation(libs.androidx.foundation)
-    implementation(libs.androidx.runtime.livedata)
-    implementation(libs.ui.tooling.preview)
-    implementation(libs.ui.tooling)
-    implementation(libs.androidx.ui.util)
-    implementation(libs.androidx.material.icons.extended)
-    implementation(libs.androidx.ui.text.google.fonts)
-    implementation(libs.accompanist.appcompat.theme)
-    implementation(libs.accompanist.flowlayout)
-    implementation(libs.accompanist.pager.indicators)
-    implementation(libs.accompanist.pager)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.svg)
-    implementation(libs.easypermissions)
-    implementation(libs.lottie.compose)
-    implementation(libs.datetime)
-
-    implementation(libs.core)
-    coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+
+    //data store
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.datastore.preferences.core)
-    implementation(libs.androidx.compose.ui.ui)
-    implementation(libs.ui.graphics)
 
-    implementation(libs.material3)
+    //compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
     implementation(libs.androidx.ui.text.google.fonts)
+
+    //paging 3
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.paging.compose)
+
+    // SDP & SSP Dependencies
     implementation(libs.sdp.android)
     implementation(libs.ssp.android)
+
+    // Internet Calling Dependencies
     implementation(libs.converter.gson)
     implementation(libs.retrofit)
     implementation(libs.gson)
     implementation(libs.logging.interceptor)
-    implementation(libs.hilt.android)
 
+    // Dependency injection
+    implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.javax.inject)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    implementation(libs.app.update)
-    implementation(libs.app.update.ktx)
 
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.ui.test.manifest)
-    implementation(libs.androidx.ui.test.junit4)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.exifinterface)
 
+    //Image Loader
+    implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
+
+
+    //Payment
+    implementation (libs.stripe.android)
+
+
+    //test
     testImplementation(libs.junit)
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.androidx.core.testing)
-    testImplementation(libs.truth)
-    testImplementation(libs.json)
-    testImplementation(libs.mockito.kotlin)
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockwebserver)
-
-
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.ui.test.junit4)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
 
-    debugImplementation(libs.androidx.compose.ui.ui.tooling)
-    debugImplementation(libs.ui.test.manifest)
-    debugImplementation(libs.flipper.network.plugin)
+    //debug
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Flipper
     debugImplementation(libs.flipper)
     debugImplementation(libs.soloader)
+    debugImplementation(libs.flipper.network.plugin)
 }

@@ -37,7 +37,7 @@ import com.neilsayok.musewearables.theme.FontColorLight
 import com.neilsayok.musewearables.ui.common.NoToolBar
 import com.neilsayok.musewearables.ui.common.PrimaryButton
 import com.neilsayok.musewearables.ui.common.SecondaryButton
-import com.neilsayok.musewearables.utils.FontPrimary
+import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.FontSFPro
 import com.neilsayok.musewearables.utils.fontDimensionResource
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,12 +45,10 @@ import kotlinx.coroutines.flow.StateFlow
 
 class HomeScreen(private val navHostController: NavHostController) : Screen() {
 
-    private val loadingState = MutableStateFlow(false)
-
 
     override fun setNavHost(): NavHostController = navHostController
 
-    override fun setLoadingState(): StateFlow<Boolean> = loadingState
+    override fun setLoadingState(): StateFlow<Boolean>? = null
 
     @Composable
     override fun Content() {
@@ -98,7 +96,7 @@ class HomeScreen(private val navHostController: NavHostController) : Screen() {
 
                     Text(
                         text = "Non-Contact Deliveries",
-                        fontFamily = FontPrimary,
+                        fontFamily = FontRoboto,
                         fontWeight = FontWeight.Bold,
                         fontSize = fontDimensionResource(id = com.intuit.sdp.R.dimen._24sdp),
                         textAlign = TextAlign.Center

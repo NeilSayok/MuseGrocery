@@ -35,12 +35,12 @@ fun CustomNavHost(navController: NavHostController,
         navController = navController,
         startDestination = startDestination,
         modifier = modifier,
-        contentAlignment = contentAlignment,
+//        contentAlignment = contentAlignment,
         route = route,
-        enterTransition = enterTransition,
-        exitTransition = exitTransition,
-        popEnterTransition = popEnterTransition,
-        popExitTransition = popExitTransition,
+//        enterTransition = enterTransition,
+//        exitTransition = exitTransition,
+//        popEnterTransition = popEnterTransition,
+//        popExitTransition = popExitTransition,
 
         ){
         AnimatedNavGraphBuilder(this).builder()
