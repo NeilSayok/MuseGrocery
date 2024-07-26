@@ -5,8 +5,9 @@ import com.facebook.flipper.android.AndroidFlipperClient
 import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.neilsayok.musewearables.BuildConfig
-import com.neilsayok.musewearables.data.model.ErrorEventData
-import com.neilsayok.musewearables.data.model.Resource
+import com.neilsayok.musewearables.data.error.ErrorEventData
+import com.neilsayok.musewearables.data.error.Resource
+import com.neilsayok.musewearables.domain.MainRepo
 import com.neilsayok.musewearables.domain.services.ApiInterface
 import dagger.Module
 import dagger.Provides
@@ -74,6 +75,10 @@ object AppModule {
     @Singleton
     @Provides
     fun providesErrorLiveData() = MutableStateFlow<Resource<ErrorEventData?>?>(null)
+
+    @Singleton
+    @Provides
+    fun providesMainRepo(apiInterface: ApiInterface) = MainRepo(apiInterface)
 
 
 

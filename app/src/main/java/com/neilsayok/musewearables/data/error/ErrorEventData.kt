@@ -1,4 +1,4 @@
-package com.neilsayok.musewearables.data.model
+package com.neilsayok.musewearables.data.error
 
 
 data class ErrorEventData(

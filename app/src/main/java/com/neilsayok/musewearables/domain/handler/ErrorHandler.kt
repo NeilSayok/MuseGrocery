@@ -6,9 +6,9 @@ import com.neilsayok.musewearables.BuildConfig
 import com.neilsayok.musewearables.application.MainApplication
 import com.neilsayok.musewearables.data.constants.EMPTY_STRING
 import com.neilsayok.musewearables.data.constants.SOMETHING_WENT_WRONG
-import com.neilsayok.musewearables.data.model.ErrorEventData
-import com.neilsayok.musewearables.data.model.Resource
-import com.neilsayok.musewearables.data.model.toError
+import com.neilsayok.musewearables.data.error.ErrorEventData
+import com.neilsayok.musewearables.data.error.Resource
+import com.neilsayok.musewearables.data.error.toError
 import com.neilsayok.musewearables.utils.backgroundThreadShortToast
 import com.neilsayok.musewearables.utils.getErrorEventData
 import com.neilsayok.musewearables.utils.getErrorTitleFromResponse

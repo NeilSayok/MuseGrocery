@@ -16,9 +16,9 @@ import com.neilsayok.musewearables.BuildConfig
 import com.neilsayok.musewearables.R
 import com.neilsayok.musewearables.data.constants.EMPTY_STRING
 import com.neilsayok.musewearables.data.constants.SOMETHING_WENT_WRONG
-import com.neilsayok.musewearables.data.model.ErrorData
-import com.neilsayok.musewearables.data.model.ErrorEventData
-import com.neilsayok.musewearables.data.model.ErrorTitleMsg
+import com.neilsayok.musewearables.data.error.ErrorData
+import com.neilsayok.musewearables.data.error.ErrorEventData
+import com.neilsayok.musewearables.data.error.ErrorTitleMsg
 import retrofit2.HttpException
 
 fun getErrorTitleFromResponse(errorObj: String?): ErrorTitleMsg? {
