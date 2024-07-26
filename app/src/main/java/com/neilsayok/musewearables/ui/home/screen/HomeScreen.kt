@@ -34,6 +34,7 @@ import com.neilsayok.musewearables.base.Screen
 import com.neilsayok.musewearables.theme.Black
 import com.neilsayok.musewearables.theme.BottomSheetBackground
 import com.neilsayok.musewearables.theme.FontColorLight
+import com.neilsayok.musewearables.ui.common.NoToolBar
 import com.neilsayok.musewearables.ui.common.PrimaryButton
 import com.neilsayok.musewearables.ui.common.SecondaryButton
 import com.neilsayok.musewearables.utils.FontPrimary
@@ -137,8 +138,7 @@ class HomeScreen(private val navHostController: NavHostController) : Screen() {
 
     @Composable
     override fun Toolbar() {
-        Box {}
-
+        NoToolBar()
     }
 
 
