@@ -27,7 +27,7 @@ class MainViewModel @Inject constructor(
     fun onEvent(event: MainEvent){
         when(event){
             is MainEvent.GetCategoriesByTypeEvent -> {
-                getCategoriesByType(event.categoryType)
+                getCategoriesByType(mainUIState.value.selectedCategory)
             }
             MainEvent.GetCategoriesEvent -> {
                 getCategories()

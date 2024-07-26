@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowLeft
@@ -21,22 +22,27 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import com.neilsayok.musewearables.base.Screen
+import com.neilsayok.musewearables.data.error.Resource
 import com.neilsayok.musewearables.theme.BackgroundColor
 import com.neilsayok.musewearables.theme.BorderColor
 import com.neilsayok.musewearables.ui.plp.components.PlpItem
 import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.fontDimensionResource
+import com.neilsayok.musewearables.utils.showToast
 import com.neilsayok.musewearables.viewmodel.MainEvent
 import com.neilsayok.musewearables.viewmodel.MainUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 
 class PlpScreen(
     private val navController: NavHostController,
@@ -52,6 +58,35 @@ class PlpScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
+
+        val context = LocalContext.current
+
+        if (uiState.isGetCategoriesByTypeSuccess == true) {
+            onEvent(MainEvent.SetIdealEvent)
+        }
+
+
+        //Error Case
+        LaunchedEffect(uiState) {
+            uiState.getCategoriesByTypeResponse.collectLatest {
+                if (it?.status == Resource.Status.ERROR) {
+                    onEvent(MainEvent.SetIdealEvent)
+                    showToast(context, it.message)
+                }
+            }
+        }
+
+        LaunchedEffect(Unit) {
+            onEvent(MainEvent.GetCategoriesByTypeEvent)
+        }
+
+
+
+
+
+
+
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -90,8 +125,12 @@ class PlpScreen(
                 verticalArrangement = Arrangement.spacedBy(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp)),
                 modifier = Modifier.weight(1f)
             ) {
-                items(20) {
-                    PlpItem()
+                uiState.getCategoriesByType?.let {getCategoriesByType->
+                items(getCategoriesByType) { catType->
+                        PlpItem(catType)
+
+                    }
+
                 }
             }
 
