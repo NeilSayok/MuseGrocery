@@ -3,6 +3,7 @@ package com.neilsayok.musewearables.viewmodel
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.neilsayok.musewearables.data.constants.EMPTY_STRING
 import com.neilsayok.musewearables.data.error.ErrorEventData
 import com.neilsayok.musewearables.data.error.Resource
 import com.neilsayok.musewearables.data.error.toLoading
@@ -31,6 +32,18 @@ class MainViewModel @Inject constructor(
             MainEvent.GetCategoriesEvent -> {
                 getCategories()
             }
+
+            is MainEvent.CategoryClick -> {
+                mainUIState.value = mainUIState.value.copy(
+                    selectedCategory = event.categoryType
+                )
+            }
+            MainEvent.CleanSelectedEvent -> {
+                mainUIState.value = mainUIState.value.copy(
+                    selectedCategory = EMPTY_STRING
+                )
+            }
+
             MainEvent.SetIdealEvent -> {
                 mainUIState.value = mainUIState.value.copy(
                     isIdeal = true,
@@ -40,6 +53,8 @@ class MainViewModel @Inject constructor(
                     isGetCategoriesByTypeSuccess = false
                 )
             }
+
+
         }
     }
 

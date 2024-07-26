@@ -12,7 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import javax.inject.Inject
 
-class MainRepo @Inject constructor(val apiInterface: ApiInterface) {
+class MainRepo @Inject constructor(private val apiInterface: ApiInterface) {
 
     suspend fun getCategories(): GetCategoriesResponse = withContext(Dispatchers.IO){
         apiInterface.getCategories()

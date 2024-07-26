@@ -1,5 +1,6 @@
 package com.neilsayok.musewearables.navigation.router
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -20,6 +21,7 @@ fun MainRouter(navHostController: NavHostController, modifier: Modifier){
     val mainVm : MainViewModel = hiltViewModel()
     val mainUIState by remember { mainVm.mainUIState }
 
+    mainUIState
 
     CustomNavHost(
         navController = navHostController,

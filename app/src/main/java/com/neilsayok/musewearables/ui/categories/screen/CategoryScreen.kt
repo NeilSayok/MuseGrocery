@@ -9,42 +9,46 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowLeft
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import com.neilsayok.musewearables.base.Screen
+import com.neilsayok.musewearables.data.error.Resource
+import com.neilsayok.musewearables.navigation.route.Routes
 import com.neilsayok.musewearables.theme.BackgroundColor
 import com.neilsayok.musewearables.theme.BorderColor
 import com.neilsayok.musewearables.ui.categories.components.CategoriesItem
-import com.neilsayok.musewearables.ui.plp.components.PlpItem
 import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.fontDimensionResource
+import com.neilsayok.musewearables.utils.showToast
 import com.neilsayok.musewearables.viewmodel.MainEvent
 import com.neilsayok.musewearables.viewmodel.MainUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 
 class CategoryScreen(private val navController: NavHostController,
                      private val uiState: MainUIState,
                      private val onEvent: (MainEvent)->Unit,) : Screen() {
-    private val loadingState = MutableStateFlow(false)
+    private val loadingState = MutableStateFlow(uiState.isLoading == true)
 
     override fun setNavHost(): NavHostController = navController
 
@@ -52,6 +56,30 @@ class CategoryScreen(private val navController: NavHostController,
 
     @Composable
     override fun Content() {
+
+        val context = LocalContext.current
+
+        if (uiState.isGetCategoriesSuccess == true) {
+            onEvent(MainEvent.SetIdealEvent)
+        }
+
+
+        //Error Case
+        LaunchedEffect(uiState) {
+            uiState.getCategoriesResponse.collectLatest {
+                if (it?.status == Resource.Status.ERROR) {
+                    onEvent(MainEvent.SetIdealEvent)
+                    showToast(context, it.message)
+                }
+            }
+        }
+
+        LaunchedEffect(Unit) {
+            onEvent(MainEvent.CleanSelectedEvent)
+            onEvent(MainEvent.GetCategoriesEvent)
+        }
+
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -90,9 +118,17 @@ class CategoryScreen(private val navController: NavHostController,
                 verticalArrangement = Arrangement.spacedBy(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp)),
                 horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = com.intuit.sdp.R.dimen._16sdp)),
             ) {
-                items(20){
-                    CategoriesItem()
+                uiState.getCategories?.let { getCat ->
+                    items(getCat) { category ->
+                        CategoriesItem(category) { selectedCategory ->
+                            selectedCategory.categoryName?.let {
+                                onEvent(MainEvent.CategoryClick(it))
+                                navController.navigate(Routes.PLPScreen.path)
+                            }
+                        }
+                    }
                 }
+
             }
 
 

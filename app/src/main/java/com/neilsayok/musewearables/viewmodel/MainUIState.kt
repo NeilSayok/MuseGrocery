@@ -1,5 +1,6 @@
 package com.neilsayok.musewearables.viewmodel
 
+import com.neilsayok.musewearables.data.constants.EMPTY_STRING
 import com.neilsayok.musewearables.data.error.Resource
 import com.neilsayok.musewearables.data.model.GetCategoriesResponse
 import com.neilsayok.musewearables.data.model.GetCategoriesResponse.*
@@ -23,5 +24,8 @@ data class MainUIState(
 
     val getCategoriesByType: MutableList<GetCategoryByTypeResponseItem>? = mutableListOf(),
     val getCategoriesByTypeResponse: MutableStateFlow<Resource<GetCategoryByTypeResponse>?> = MutableStateFlow(Resource()),
+
+    //Flow Data
+    val selectedCategory : String = EMPTY_STRING
 
     )
