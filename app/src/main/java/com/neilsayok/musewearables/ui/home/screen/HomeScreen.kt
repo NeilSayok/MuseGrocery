@@ -1,6 +1,7 @@
 package com.neilsayok.musewearables.ui.home.screen
 
 
+import android.app.Activity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.neilsayok.musewearables.R
 import com.neilsayok.musewearables.base.Screen
+import com.neilsayok.musewearables.navigation.route.Routes
 import com.neilsayok.musewearables.theme.Black
 import com.neilsayok.musewearables.theme.BottomSheetBackground
 import com.neilsayok.musewearables.theme.FontColorLight
@@ -40,7 +43,7 @@ import com.neilsayok.musewearables.ui.common.SecondaryButton
 import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.FontSFPro
 import com.neilsayok.musewearables.utils.fontDimensionResource
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.neilsayok.musewearables.utils.showToast
 import kotlinx.coroutines.flow.StateFlow
 
 class HomeScreen(private val navHostController: NavHostController) : Screen() {
@@ -52,6 +55,10 @@ class HomeScreen(private val navHostController: NavHostController) : Screen() {
 
     @Composable
     override fun Content() {
+
+        val context = LocalContext.current
+        val activity = (context as? Activity)
+
         Box(modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter)
         {
@@ -113,7 +120,10 @@ class HomeScreen(private val navHostController: NavHostController) : Screen() {
                     )
                     Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._18sdp)))
 
-                    PrimaryButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
+                    PrimaryButton(
+                        onClick = { navHostController.navigate(Routes.CategoryScreen.path) },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         Text(
                             text = "ORDER NOW",
                             fontSize = fontDimensionResource(id = com.intuit.sdp.R.dimen._14sdp),
@@ -122,7 +132,10 @@ class HomeScreen(private val navHostController: NavHostController) : Screen() {
                     Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp)))
 
 
-                    SecondaryButton(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
+                    SecondaryButton(onClick = {
+                        showToast(context, "Thanks for using our app!")
+                        activity?.finish()
+                    }, modifier = Modifier.fillMaxWidth()) {
                         Text(
                             text = "Dismiss",
                             fontSize = fontDimensionResource(id = com.intuit.sdp.R.dimen._14sdp),
