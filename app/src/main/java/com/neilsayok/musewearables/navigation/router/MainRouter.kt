@@ -1,6 +1,5 @@
 package com.neilsayok.musewearables.navigation.router
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -11,6 +10,7 @@ import com.neilsayok.musewearables.navigation.components.CustomNavHost
 import com.neilsayok.musewearables.navigation.route.Routes
 import com.neilsayok.musewearables.ui.categories.screen.CategoryScreen
 import com.neilsayok.musewearables.ui.home.screen.HomeScreen
+import com.neilsayok.musewearables.ui.pdp.screen.PDPScreen
 import com.neilsayok.musewearables.ui.plp.screen.PlpScreen
 import com.neilsayok.musewearables.viewmodel.MainViewModel
 
@@ -37,10 +37,17 @@ fun MainRouter(navHostController: NavHostController, modifier: Modifier){
             navController = navHostController,
             uiState = mainUIState,
             onEvent = { event -> mainVm.onEvent(event) }) )
+
         composableScreen(Routes.PLPScreen.path, screen = PlpScreen(
             navController = navHostController,
             uiState = mainUIState,
             onEvent = { event -> mainVm.onEvent(event) }) )
+
+        composableScreen(
+            Routes.PDPScreen.path, screen = PDPScreen(navController = navHostController,
+                uiState = mainUIState,
+                onEvent = { event -> mainVm.onEvent(event) })
+        )
 
     }
 

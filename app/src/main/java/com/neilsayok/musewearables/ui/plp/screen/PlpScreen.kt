@@ -33,6 +33,7 @@ import androidx.navigation.NavHostController
 import com.neilsayok.musewearables.base.Screen
 import com.neilsayok.musewearables.data.constants.EMPTY_STRING
 import com.neilsayok.musewearables.data.error.Resource
+import com.neilsayok.musewearables.navigation.route.Routes
 import com.neilsayok.musewearables.theme.BackgroundColor
 import com.neilsayok.musewearables.theme.BorderColor
 import com.neilsayok.musewearables.ui.plp.components.PlpItem
@@ -128,7 +129,10 @@ class PlpScreen(
             ) {
                 uiState.getCategoriesByType?.let {getCategoriesByType->
                 items(getCategoriesByType) { catType->
-                        PlpItem(catType)
+                        PlpItem(catType){selectedCat->
+                            onEvent(MainEvent.PLPClick(selectedCat))
+                            navController.navigate(Routes.PDPScreen.path)
+                        }
                     }
 
                 }

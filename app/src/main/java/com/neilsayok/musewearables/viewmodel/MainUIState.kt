@@ -26,6 +26,7 @@ data class MainUIState(
     val getCategoriesByTypeResponse: MutableStateFlow<Resource<GetCategoryByTypeResponse>?> = MutableStateFlow(Resource()),
 
     //Flow Data
-    val selectedCategory : GetCategoriesResponseItem? = null
+    val selectedCategory : GetCategoriesResponseItem? = null,
+    val selectedPLPItem : GetCategoryByTypeResponseItem? = null
 
     )

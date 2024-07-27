@@ -32,11 +32,21 @@ class MainViewModel @Inject constructor(
                 getCategories()
             }
 
+
+
             is MainEvent.CategoryClick -> {
                 mainUIState.value = mainUIState.value.copy(
                     selectedCategory = event.selectedCategory
                 )
             }
+
+            is MainEvent.PLPClick -> {
+                mainUIState.value = mainUIState.value.copy(
+                    selectedPLPItem = event.selectedItem
+                )
+            }
+
+
             MainEvent.CleanSelectedEvent -> {
                 mainUIState.value = mainUIState.value.copy(
                     selectedCategory = null
@@ -52,7 +62,6 @@ class MainViewModel @Inject constructor(
                     isGetCategoriesByTypeSuccess = false
                 )
             }
-
 
         }
     }
