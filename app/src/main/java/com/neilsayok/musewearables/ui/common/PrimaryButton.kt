@@ -14,7 +14,8 @@ import com.neilsayok.musewearables.theme.Tertiary
 fun PrimaryButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    enabled: Boolean = true,
+    content: @Composable () -> Unit,
 ) {
 
     Button(onClick = {onClick()},
@@ -23,6 +24,7 @@ fun PrimaryButton(
             containerColor = Tertiary,
             contentColor = Color.White
         ),
+        enabled = enabled,
         shape = RoundedCornerShape(dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))
     ) {
         content()

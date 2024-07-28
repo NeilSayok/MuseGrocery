@@ -5,4 +5,5 @@ sealed class Routes(val path : String) {
     data object CategoryScreen : Routes(path = "category_screen")
     data object PLPScreen : Routes(path = "plp_screen")
     data object PDPScreen : Routes(path = "pdp_screen")
+    data object CartScreen : Routes(path = "cart_screen")
 }
