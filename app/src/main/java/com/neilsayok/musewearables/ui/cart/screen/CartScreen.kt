@@ -2,6 +2,7 @@ package com.neilsayok.musewearables.ui.cart.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowLeft
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -37,12 +37,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
 import com.neilsayok.musewearables.R
 import com.neilsayok.musewearables.base.Screen
+import com.neilsayok.musewearables.navigation.route.Routes
 import com.neilsayok.musewearables.theme.BackgroundColor
 import com.neilsayok.musewearables.theme.Primary
 import com.neilsayok.musewearables.ui.cart.component.DeliveryOptionComponentList
 import com.neilsayok.musewearables.ui.common.PrimaryButton
 import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.fontDimensionResource
+import com.neilsayok.musewearables.utils.showToast
 import com.neilsayok.musewearables.viewmodel.MainEvent
 import com.neilsayok.musewearables.viewmodel.MainUIState
 import kotlinx.coroutines.flow.StateFlow
@@ -93,6 +95,9 @@ class CartScreen(
                         fontWeight = FontWeight.Medium,
                         color = Primary,
                         fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._12ssp),
+                        modifier = Modifier.clickable {
+                            navController.navigate(Routes.AddPaymentMethod.path)
+                        }
 
                         )
                 }
@@ -104,10 +109,11 @@ class CartScreen(
 
                     Spacer(modifier = Modifier.width(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp)))
 
-                    Text(text = "No card Selected",
+                    Text(
+                        text = if (uiState.selectedCard.isBlank()) "No card Selected" else maskCardNumber(
+                            uiState.selectedCard
+                        ),
                         modifier = Modifier.weight(1f))
-
-
 
                 }
             }
@@ -190,11 +196,15 @@ class CartScreen(
                     Switch(checked = isNonContactDelivery, onCheckedChange = {isNonContactDelivery = it})
                 }
             }
+
             item{
                 Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._24sdp)))
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                    PrimaryButton(onClick = { /*TODO*/ },
-                        enabled = false
+                    PrimaryButton(onClick = {
+                        onEvent(MainEvent.ClearCart)
+                        navController.navigate(Routes.ThankYouScreen.path)
+                    },
+                        enabled = uiState.selectedCard.isNotBlank()
                     ) {
                         Text(text = "Proceed To Checkout")
                     }
@@ -238,5 +248,15 @@ class CartScreen(
             }
         }
 
+    }
+
+    private fun maskCardNumber(cardNumber: String): String {
+        // Split the card number by spaces
+        val parts = cardNumber.split(" ")
+
+        // Mask the first three parts with "****" and leave the last part as is
+        return parts.mapIndexed { index, part ->
+            if (index < parts.size - 1) "****" else part
+        }.joinToString(" ")
     }
 }

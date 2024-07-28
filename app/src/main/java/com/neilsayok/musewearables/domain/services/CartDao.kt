@@ -1,6 +1,7 @@
 package com.neilsayok.musewearables.domain.services
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -36,6 +37,9 @@ interface CartDao {
 
     @Query("DELETE FROM cart WHERE typeID = :id and name = :name")
     suspend fun deleteCartItem(id: Int, name: String)
+
+    @Query("DELETE FROM cart")
+    suspend fun deleteCart()
 
     suspend fun deleteCartItem(item: GetCategoryByTypeResponseItem?){
         item?.let { deleteCartItem(it.typeID?: Int.MIN_VALUE,it.typeName?: EMPTY_STRING) }

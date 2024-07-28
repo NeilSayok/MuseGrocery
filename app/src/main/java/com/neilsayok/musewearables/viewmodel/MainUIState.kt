@@ -33,4 +33,8 @@ data class MainUIState(
     val cartCount : Int = 0,
     val isLiked : Boolean = false,
 
+    val selectedCard : String = EMPTY_STRING
+
+
+
     )

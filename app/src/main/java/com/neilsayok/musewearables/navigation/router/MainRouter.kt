@@ -10,7 +10,8 @@ import com.neilsayok.musewearables.navigation.components.CustomNavHost
 import com.neilsayok.musewearables.navigation.route.Routes
 import com.neilsayok.musewearables.ui.cart.screen.CartScreen
 import com.neilsayok.musewearables.ui.categories.screen.CategoryScreen
-import com.neilsayok.musewearables.ui.home.screen.HomeScreen
+import com.neilsayok.musewearables.ui.thankyou.screen.ThankYouScreen
+import com.neilsayok.musewearables.ui.paymentMethod.screen.AddPaymentMethodScreen
 import com.neilsayok.musewearables.ui.pdp.screen.PDPScreen
 import com.neilsayok.musewearables.ui.plp.screen.PlpScreen
 import com.neilsayok.musewearables.viewmodel.MainViewModel
@@ -29,7 +30,7 @@ fun MainRouter(navHostController: NavHostController, modifier: Modifier){
         startDestination = Routes.CartScreen.path,
         modifier = modifier
     ) {
-        composableScreen(Routes.HomeScreen.path, screen = HomeScreen(
+        composableScreen(Routes.HomeScreen.path, screen = ThankYouScreen(
             navHostController = navHostController,
             uiState = mainUIState,
             onEvent = { event -> mainVm.onEvent(event) }
@@ -51,6 +52,16 @@ fun MainRouter(navHostController: NavHostController, modifier: Modifier){
         )
         composableScreen(
             Routes.CartScreen.path, screen = CartScreen(navController = navHostController,
+                uiState = mainUIState,
+                onEvent = { event -> mainVm.onEvent(event) })
+        )
+        composableScreen(
+            Routes.AddPaymentMethod.path, screen = AddPaymentMethodScreen(navController = navHostController,
+                uiState = mainUIState,
+                onEvent = { event -> mainVm.onEvent(event) })
+        )
+        composableScreen(
+            Routes.ThankYouScreen.path, screen = ThankYouScreen(navHostController = navHostController,
                 uiState = mainUIState,
                 onEvent = { event -> mainVm.onEvent(event) })
         )

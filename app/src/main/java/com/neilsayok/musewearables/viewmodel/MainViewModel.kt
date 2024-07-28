@@ -59,6 +59,14 @@ class MainViewModel @Inject constructor(
                 )
             }
 
+            is MainEvent.ClearCart -> {
+                deleteCart()
+                mainUIState.value = mainUIState.value.copy(
+                    selectedCard = EMPTY_STRING
+                )
+            }
+
+
             is MainEvent.GetCartCountForItem -> getCartCountForItem(event.selectedItem)
             is MainEvent.DecreaseItemInCart -> decreaseItemCart(event.selectedItem)
             is MainEvent.IncreaseItemInCart -> increaseItemCart(event.selectedItem)
@@ -74,6 +82,14 @@ class MainViewModel @Inject constructor(
                 )
             }
 
+            is MainEvent.SaveCard -> {
+                mainUIState.value = mainUIState.value.copy(
+                    selectedCard = event.cardNumber
+                )
+            }
+
+
+
 
             MainEvent.SetIdealEvent -> {
                 mainUIState.value = mainUIState.value.copy(
@@ -84,7 +100,6 @@ class MainViewModel @Inject constructor(
                     isGetCategoriesByTypeSuccess = false
                 )
             }
-
 
         }
     }
@@ -242,7 +257,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    private fun deleteCart(){
+        viewModelScope.launch {
+            cartDao.deleteCart()
 
+        }
+    }
 
 
 }

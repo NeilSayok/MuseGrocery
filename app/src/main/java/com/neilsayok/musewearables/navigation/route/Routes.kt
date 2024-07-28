@@ -6,4 +6,6 @@ sealed class Routes(val path : String) {
     data object PLPScreen : Routes(path = "plp_screen")
     data object PDPScreen : Routes(path = "pdp_screen")
     data object CartScreen : Routes(path = "cart_screen")
+    data object AddPaymentMethod : Routes(path = "add_payment_method_screen")
+    data object ThankYouScreen : Routes(path = "thanks_screen")
 }
