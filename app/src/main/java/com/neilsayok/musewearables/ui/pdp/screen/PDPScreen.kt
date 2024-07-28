@@ -1,6 +1,9 @@
 package com.neilsayok.musewearables.ui.pdp.screen
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,8 +11,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
@@ -19,7 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -38,9 +44,9 @@ import com.neilsayok.musewearables.theme.Tertiary
 import com.neilsayok.musewearables.ui.common.AddToCartButton
 import com.neilsayok.musewearables.ui.common.NoToolBar
 import com.neilsayok.musewearables.ui.common.SecondaryButton
+import com.neilsayok.musewearables.ui.pdp.component.ImageSlider
 import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.fontDimensionResource
-import com.neilsayok.musewearables.utils.loadImage
 import com.neilsayok.musewearables.viewmodel.MainEvent
 import com.neilsayok.musewearables.viewmodel.MainUIState
 import kotlinx.coroutines.flow.StateFlow
@@ -55,6 +61,7 @@ class PDPScreen(
 
     override fun setLoadingState(): StateFlow<Boolean>? = null
 
+    @OptIn(ExperimentalFoundationApi::class)
     @Composable
     override fun Content() {
 
@@ -74,24 +81,47 @@ class PDPScreen(
 
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
 
-            val (pager, card) = createRefs()
+            val (pager, indicator, card) = createRefs()
 
             val guide50 = createGuidelineFromTop(0.6f)
             val guide40 = createGuidelineFromTop(0.4f)
 
+            val imageUrlList = item?.sliderImages?.filterNotNull()
+            val pagerState = rememberPagerState(initialPage = 0, pageCount = { imageUrlList?.size?:0 })
 
-            Image(painter = loadImage(url = item?.sliderImages?.get(0)),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.constrainAs(pager) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    bottom.linkTo(guide50)
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                })
 
+            ImageSlider(modifier = Modifier.constrainAs(pager) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(guide50)
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+            }, imageUrlList = imageUrlList, pagerState = pagerState)
+
+
+            Row(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .constrainAs(indicator){
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(card.top, 8.dp)
+                    },
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                imageUrlList?.forEachIndexed { index, _ ->
+                    val isSelected = pagerState.currentPage == index
+                    Box(
+                        modifier = Modifier
+                            .size(if (isSelected) 8.dp else 6.dp)
+                            .background(
+                                if (isSelected) Color.White else Color.Gray, shape = CircleShape
+                            )
+                    )
+                }
+            }
 
             Card(
                 modifier = Modifier.constrainAs(card) {
