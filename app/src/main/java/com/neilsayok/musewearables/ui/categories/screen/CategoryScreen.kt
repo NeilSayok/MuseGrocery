@@ -36,6 +36,7 @@ import com.neilsayok.musewearables.navigation.route.Routes
 import com.neilsayok.musewearables.theme.BackgroundColor
 import com.neilsayok.musewearables.theme.BorderColor
 import com.neilsayok.musewearables.ui.categories.components.CategoriesItem
+import com.neilsayok.musewearables.ui.common.BottomNav
 import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.fontDimensionResource
 import com.neilsayok.musewearables.utils.showToast
@@ -80,58 +81,71 @@ class CategoryScreen(private val navController: NavHostController,
         }
 
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(BackgroundColor)
-                .padding(
-                    horizontal = dimensionResource(id = com.intuit.sdp.R.dimen._12sdp)
-                )
-        ) {
-            Text(
-                text = "Categories",
-                fontFamily = FontRoboto,
-                fontWeight = FontWeight.Medium,
-                fontSize = fontDimensionResource(
-                    id = com.intuit.ssp.R.dimen._24ssp
-                )
-            )
-
-            Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._12sdp)))
-
-            OutlinedTextField(value = "",
-                onValueChange = {},
-                leadingIcon = { Icon(imageVector = Icons.Outlined.Search, contentDescription = null) },
-                placeholder = { Text(text = "Search") },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    focusedBorderColor = BorderColor,
-                    unfocusedBorderColor = BorderColor
-                ),
-                shape = RoundedCornerShape(100),
-                modifier = Modifier.fillMaxWidth())
-
-            Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._12sdp)))
-
-            LazyVerticalGrid(columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.spacedBy(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp)),
-                horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = com.intuit.sdp.R.dimen._16sdp)),
+        Column( modifier = Modifier
+            .fillMaxSize()
+            .background(BackgroundColor)) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .background(BackgroundColor)
+                    .padding(
+                        horizontal = dimensionResource(id = com.intuit.sdp.R.dimen._12sdp)
+                    )
             ) {
-                uiState.getCategories?.let { getCat ->
-                    items(getCat) { category ->
-                        CategoriesItem(category) { selectedCategory ->
+                Text(
+                    text = "Categories",
+                    fontFamily = FontRoboto,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = fontDimensionResource(
+                        id = com.intuit.ssp.R.dimen._24ssp
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._12sdp)))
+
+                OutlinedTextField(value = "",
+                    onValueChange = {},
+                    leadingIcon = { Icon(imageVector = Icons.Outlined.Search, contentDescription = null) },
+                    placeholder = { Text(text = "Search") },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = Color.White,
+                        unfocusedContainerColor = Color.White,
+                        focusedBorderColor = BorderColor,
+                        unfocusedBorderColor = BorderColor
+                    ),
+                    shape = RoundedCornerShape(100),
+                    modifier = Modifier.fillMaxWidth())
+
+                Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._12sdp)))
+
+                LazyVerticalGrid(columns = GridCells.Fixed(2),
+                    verticalArrangement = Arrangement.spacedBy(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp)),
+                    horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = com.intuit.sdp.R.dimen._16sdp)),
+                    modifier = Modifier.weight(1f)
+                ) {
+                    uiState.getCategories?.let { getCat ->
+                        items(getCat) { category ->
+                            CategoriesItem(category) { selectedCategory ->
                                 onEvent(MainEvent.CategoryClick(selectedCategory))
                                 navController.navigate(Routes.PLPScreen.path)
 
+                            }
                         }
                     }
+
                 }
+
+
+
 
             }
 
+            BottomNav(navController = navController, backgroundColor = BackgroundColor)
 
         }
+
+
     }
 
 

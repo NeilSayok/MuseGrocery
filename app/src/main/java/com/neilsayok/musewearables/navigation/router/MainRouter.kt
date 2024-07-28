@@ -10,6 +10,7 @@ import com.neilsayok.musewearables.navigation.components.CustomNavHost
 import com.neilsayok.musewearables.navigation.route.Routes
 import com.neilsayok.musewearables.ui.cart.screen.CartScreen
 import com.neilsayok.musewearables.ui.categories.screen.CategoryScreen
+import com.neilsayok.musewearables.ui.home.screen.HomeScreen
 import com.neilsayok.musewearables.ui.thankyou.screen.ThankYouScreen
 import com.neilsayok.musewearables.ui.paymentMethod.screen.AddPaymentMethodScreen
 import com.neilsayok.musewearables.ui.pdp.screen.PDPScreen
@@ -27,10 +28,10 @@ fun MainRouter(navHostController: NavHostController, modifier: Modifier){
 
     CustomNavHost(
         navController = navHostController,
-        startDestination = Routes.CartScreen.path,
+        startDestination = Routes.HomeScreen.path,
         modifier = modifier
     ) {
-        composableScreen(Routes.HomeScreen.path, screen = ThankYouScreen(
+        composableScreen(Routes.HomeScreen.path, screen = HomeScreen(
             navHostController = navHostController,
             uiState = mainUIState,
             onEvent = { event -> mainVm.onEvent(event) }

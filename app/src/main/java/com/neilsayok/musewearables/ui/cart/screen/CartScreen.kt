@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,10 +42,10 @@ import com.neilsayok.musewearables.navigation.route.Routes
 import com.neilsayok.musewearables.theme.BackgroundColor
 import com.neilsayok.musewearables.theme.Primary
 import com.neilsayok.musewearables.ui.cart.component.DeliveryOptionComponentList
+import com.neilsayok.musewearables.ui.common.BottomNav
 import com.neilsayok.musewearables.ui.common.PrimaryButton
 import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.fontDimensionResource
-import com.neilsayok.musewearables.utils.showToast
 import com.neilsayok.musewearables.viewmodel.MainEvent
 import com.neilsayok.musewearables.viewmodel.MainUIState
 import kotlinx.coroutines.flow.StateFlow
@@ -66,156 +67,161 @@ class CartScreen(
         var isNonContactDelivery by remember { mutableStateOf(true) }
 
 
+        Column {
+            LazyColumn(
+                modifier = Modifier
+                    .background(BackgroundColor)
+                    .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp))
+            ) {
+                stickyHeader {
+                    Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp)))
+                }
 
-        LazyColumn(
-            modifier = Modifier
-                .background(BackgroundColor)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp))
-        ) {
-            stickyHeader {
-                Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp)))
-            }
-
-            item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(horizontal = dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))) {
-                    Text(
-                        text = "Payment Method",
-                        fontFamily = FontRoboto,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._18ssp),
-                        modifier = Modifier.weight(1f)
-                    )
-                    Text(
-                        text = "CHANGE",
-                        fontFamily = FontRoboto,
-                        fontWeight = FontWeight.Medium,
-                        color = Primary,
-                        fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._12ssp),
-                        modifier = Modifier.clickable {
-                            navController.navigate(Routes.AddPaymentMethod.path)
-                        }
+                item {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .padding(horizontal = dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))) {
+                        Text(
+                            text = "Payment Method",
+                            fontFamily = FontRoboto,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._18ssp),
+                            modifier = Modifier.weight(1f)
+                        )
+                        Text(
+                            text = "CHANGE",
+                            fontFamily = FontRoboto,
+                            fontWeight = FontWeight.Medium,
+                            color = Primary,
+                            fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._12ssp),
+                            modifier = Modifier.clickable {
+                                navController.navigate(Routes.AddPaymentMethod.path)
+                            }
 
                         )
-                }
-                Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._4sdp)))
+                    }
+                    Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._4sdp)))
 
-                Row(modifier = Modifier.padding(dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))) {
+                    Row(modifier = Modifier.padding(dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))) {
 
-                    Icon(painter = painterResource(id = R.drawable.credit_card), contentDescription = null)
+                        Icon(painter = painterResource(id = R.drawable.credit_card), contentDescription = null)
 
-                    Spacer(modifier = Modifier.width(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp)))
+                        Spacer(modifier = Modifier.width(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp)))
 
-                    Text(
-                        text = if (uiState.selectedCard.isBlank()) "No card Selected" else maskCardNumber(
-                            uiState.selectedCard
-                        ),
-                        modifier = Modifier.weight(1f))
+                        Text(
+                            text = if (uiState.selectedCard.isBlank()) "No card Selected" else maskCardNumber(
+                                uiState.selectedCard
+                            ),
+                            modifier = Modifier.weight(1f))
 
-                }
-            }
-
-            item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(horizontal = dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))) {
-                    Text(
-                        text = "Delivery Address",
-                        fontFamily = FontRoboto,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._18ssp),
-                        modifier = Modifier.weight(1f)
-                    )
-                    Text(
-                        text = "CHANGE",
-                        fontFamily = FontRoboto,
-                        fontWeight = FontWeight.Medium,
-                        color = Primary,
-                        fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._12ssp),
-
-                        )
-                }
-                Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._4sdp)))
-
-                Row(modifier = Modifier.padding(dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))) {
-
-                    Icon(painter = painterResource(id = R.drawable.ic_home), contentDescription = null)
-
-                    Spacer(modifier = Modifier.width(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp)))
-
-                    Text(text = "Alexandra Smith Cesu 31 k-2 5.st, SIA Chili Riga LV–1012 Latvia",
-                        modifier = Modifier.weight(1f))
-
-                    Spacer(modifier = Modifier.weight(1.5f))
-
-                }
-            }
-
-            item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                    .padding(horizontal = dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))) {
-                    Text(
-                        text = "Delivery Options",
-                        fontFamily = FontRoboto,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._18ssp),
-                        modifier = Modifier.weight(1f)
-                    )
-                    Text(
-                        text = "CHANGE",
-                        fontFamily = FontRoboto,
-                        fontWeight = FontWeight.Medium,
-                        color = Primary,
-                        fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._12ssp),
-
-                        )
-                }
-                Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._4sdp)))
-                DeliveryOptionComponentList()
-            }
-
-            item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(horizontal = dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))) {
-                    Text(
-                        text = "Non-Contact Delivery",
-                        fontFamily = FontRoboto,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._18ssp),
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    Switch(checked = isNonContactDelivery, onCheckedChange = {isNonContactDelivery = it})
-                }
-            }
-
-            item{
-                Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._24sdp)))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                    PrimaryButton(onClick = {
-                        onEvent(MainEvent.ClearCart)
-                        navController.navigate(Routes.ThankYouScreen.path)
-                    },
-                        enabled = uiState.selectedCard.isNotBlank()
-                    ) {
-                        Text(text = "Proceed To Checkout")
                     }
                 }
 
+                item {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .padding(horizontal = dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))) {
+                        Text(
+                            text = "Delivery Address",
+                            fontFamily = FontRoboto,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._18ssp),
+                            modifier = Modifier.weight(1f)
+                        )
+                        Text(
+                            text = "CHANGE",
+                            fontFamily = FontRoboto,
+                            fontWeight = FontWeight.Medium,
+                            color = Primary,
+                            fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._12ssp),
+
+                            )
+                    }
+                    Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._4sdp)))
+
+                    Row(modifier = Modifier.padding(dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))) {
+
+                        Icon(painter = painterResource(id = R.drawable.ic_home), contentDescription = null)
+
+                        Spacer(modifier = Modifier.width(dimensionResource(id = com.intuit.sdp.R.dimen._8sdp)))
+
+                        Text(text = "Alexandra Smith Cesu 31 k-2 5.st, SIA Chili Riga LV–1012 Latvia",
+                            modifier = Modifier.weight(1f))
+
+                        Spacer(modifier = Modifier.weight(1.5f))
+
+                    }
+                }
+
+                item {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .padding(horizontal = dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))) {
+                        Text(
+                            text = "Delivery Options",
+                            fontFamily = FontRoboto,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._18ssp),
+                            modifier = Modifier.weight(1f)
+                        )
+                        Text(
+                            text = "CHANGE",
+                            fontFamily = FontRoboto,
+                            fontWeight = FontWeight.Medium,
+                            color = Primary,
+                            fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._12ssp),
+
+                            )
+                    }
+                    Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._4sdp)))
+                    DeliveryOptionComponentList()
+                }
+
+                item {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .padding(horizontal = dimensionResource(id = com.intuit.sdp.R.dimen._12sdp))) {
+                        Text(
+                            text = "Non-Contact Delivery",
+                            fontFamily = FontRoboto,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = fontDimensionResource(id = com.intuit.ssp.R.dimen._18ssp),
+                            modifier = Modifier.weight(1f)
+                        )
+
+                        Switch(checked = isNonContactDelivery, onCheckedChange = {isNonContactDelivery = it})
+                    }
+                }
+
+                item{
+                    Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._24sdp)))
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                        PrimaryButton(onClick = {
+                            onEvent(MainEvent.ClearCart)
+                            navController.navigate(Routes.ThankYouScreen.path)
+                        },
+                            enabled = uiState.selectedCard.isNotBlank()
+                        ) {
+                            Text(text = "Proceed To Checkout")
+                        }
+                    }
+
+                }
+
+
+
+
             }
 
-
-
-
+            BottomNav(navController = navController, backgroundColor = BackgroundColor)
         }
+
+
     }
 
     @Composable
