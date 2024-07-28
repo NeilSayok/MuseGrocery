@@ -29,7 +29,7 @@ data class MainUIState(
     val selectedCategory : GetCategoriesResponseItem? = null,
     val selectedPLPItem : GetCategoryByTypeResponseItem? = null,
 
-    val totalCartCount : String = EMPTY_STRING,
+    val totalCartCount : Int = 0,
     val cartCount : Int = 0,
     val isLiked : Boolean = false,
 

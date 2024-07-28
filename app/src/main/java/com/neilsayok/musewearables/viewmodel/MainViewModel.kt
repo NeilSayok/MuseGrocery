@@ -89,6 +89,36 @@ class MainViewModel @Inject constructor(
             }
 
 
+            is MainEvent.SearchCategories -> {
+                val catResp = mainUIState.value.getCategories
+
+                if (event.searchTerm.isBlank()){
+                    mainUIState.value = mainUIState.value.copy(
+                        getCategories = mainUIState.value.getCategoriesResponse.value?.data?.toMutableList()
+                    )
+                }else{
+                    mainUIState.value = mainUIState.value.copy(
+                        getCategories = catResp?.filter { it.categoryName?.lowercase()?.contains( event.searchTerm) == true }?.toMutableList()
+                    )
+                }
+
+
+            }
+            is MainEvent.SearchPLP ->{
+                val plpResp = mainUIState.value.getCategoriesByType
+
+                if (event.searchTerm.isBlank()){
+                    mainUIState.value = mainUIState.value.copy(
+                        getCategoriesByType = mainUIState.value.getCategoriesByTypeResponse.value?.data?.toMutableList()
+                    )
+                }else{
+                    mainUIState.value = mainUIState.value.copy(
+                        getCategoriesByType = plpResp?.filter { it.typeName?.lowercase()?.contains( event.searchTerm.lowercase()) == true }?.toMutableList()
+                    )
+                }
+
+            }
+
 
 
             MainEvent.SetIdealEvent -> {
@@ -100,6 +130,7 @@ class MainViewModel @Inject constructor(
                     isGetCategoriesByTypeSuccess = false
                 )
             }
+
 
         }
     }
@@ -186,6 +217,7 @@ class MainViewModel @Inject constructor(
                 item.let { cartDao.updateCartLine(it.toCart(updatedQuantity)) }
             }
             getCartCountForItem(item)
+            getTotalCartCount()
         }
     }
 
@@ -204,6 +236,7 @@ class MainViewModel @Inject constructor(
                 }
             }
             getCartCountForItem(item)
+            getTotalCartCount()
 
         }
     }
@@ -213,15 +246,7 @@ class MainViewModel @Inject constructor(
             val cartCount = cartDao.getCartCount().filterNotNull().sum()
 
             mainUIState.value = mainUIState.value.copy(
-                totalCartCount = if (cartCount < 10) {
-                    if (cartCount > 1) {
-                        "$cartCount"
-                    } else {
-                        EMPTY_STRING
-                    }
-                } else {
-                    "9+"
-                }
+                totalCartCount = cartCount
             )
         }
     }
@@ -260,7 +285,7 @@ class MainViewModel @Inject constructor(
     private fun deleteCart(){
         viewModelScope.launch {
             cartDao.deleteCart()
-
+            getTotalCartCount()
         }
     }
 

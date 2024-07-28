@@ -27,6 +27,9 @@ sealed class MainEvent() {
     data class PressLike(val selectedItem: GetCategoryByTypeResponseItem) : MainEvent()
     data class IsItemLikedLike(val selectedItem: GetCategoryByTypeResponseItem) : MainEvent()
     data class SaveCard(val cardNumber: String) : MainEvent()
+    data class SearchCategories(val searchTerm: String) : MainEvent()
+    data class SearchPLP(val searchTerm: String) : MainEvent()
+
     data object ClearCart : MainEvent()
 
 

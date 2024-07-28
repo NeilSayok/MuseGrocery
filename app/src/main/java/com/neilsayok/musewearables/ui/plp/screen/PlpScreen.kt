@@ -23,6 +23,10 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,6 +46,7 @@ import com.neilsayok.musewearables.utils.fontDimensionResource
 import com.neilsayok.musewearables.utils.showToast
 import com.neilsayok.musewearables.viewmodel.MainEvent
 import com.neilsayok.musewearables.viewmodel.MainUIState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -62,6 +67,13 @@ class PlpScreen(
     override fun Content() {
 
         val context = LocalContext.current
+
+        var searchterm by remember { mutableStateOf(EMPTY_STRING) }
+
+        LaunchedEffect(key1 = searchterm) {
+            delay(300)//Debouncing
+            onEvent(MainEvent.SearchPLP(searchterm))
+        }
 
         if (uiState.isGetCategoriesByTypeSuccess == true) {
             onEvent(MainEvent.SetIdealEvent)
@@ -109,8 +121,8 @@ class PlpScreen(
 
             Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._12sdp)))
 
-            OutlinedTextField(value = "",
-                onValueChange = {},
+            OutlinedTextField(value = searchterm,
+                onValueChange = {searchterm = it},
                 leadingIcon = { Icon(imageVector = Icons.Outlined.Search, contentDescription = null) },
                 placeholder = { Text(text = "Search") },
                 colors = OutlinedTextFieldDefaults.colors(

@@ -23,7 +23,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -56,6 +58,8 @@ class CartScreen(
     private val onEvent: (MainEvent) -> Unit,
 ) : Screen() {
 
+
+
     override fun setNavHost(): NavHostController = navController
 
     override fun setLoadingState(): StateFlow<Boolean>? = null
@@ -65,6 +69,11 @@ class CartScreen(
     override fun Content() {
 
         var isNonContactDelivery by remember { mutableStateOf(true) }
+        val cartCount by remember { mutableIntStateOf(uiState.totalCartCount) }
+
+        LaunchedEffect(key1 = Unit) {
+            onEvent(MainEvent.GetTotalCartCount)
+        }
 
 
         Column {
@@ -218,7 +227,7 @@ class CartScreen(
 
             }
 
-            BottomNav(navController = navController, backgroundColor = BackgroundColor)
+            BottomNav(navController = navController, backgroundColor = BackgroundColor, cartCount = cartCount)
         }
 
 

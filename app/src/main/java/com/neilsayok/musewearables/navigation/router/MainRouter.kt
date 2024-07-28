@@ -15,6 +15,7 @@ import com.neilsayok.musewearables.ui.thankyou.screen.ThankYouScreen
 import com.neilsayok.musewearables.ui.paymentMethod.screen.AddPaymentMethodScreen
 import com.neilsayok.musewearables.ui.pdp.screen.PDPScreen
 import com.neilsayok.musewearables.ui.plp.screen.PlpScreen
+import com.neilsayok.musewearables.viewmodel.MainEvent
 import com.neilsayok.musewearables.viewmodel.MainViewModel
 
 
@@ -25,6 +26,7 @@ fun MainRouter(navHostController: NavHostController, modifier: Modifier){
     val mainUIState by remember { mainVm.mainUIState }
 
     mainUIState
+    mainVm.onEvent(MainEvent.GetTotalCartCount)
 
     CustomNavHost(
         navController = navHostController,

@@ -23,6 +23,11 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,6 +36,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import com.neilsayok.musewearables.base.Screen
+import com.neilsayok.musewearables.data.constants.EMPTY_STRING
 import com.neilsayok.musewearables.data.error.Resource
 import com.neilsayok.musewearables.navigation.route.Routes
 import com.neilsayok.musewearables.theme.BackgroundColor
@@ -42,6 +48,7 @@ import com.neilsayok.musewearables.utils.fontDimensionResource
 import com.neilsayok.musewearables.utils.showToast
 import com.neilsayok.musewearables.viewmodel.MainEvent
 import com.neilsayok.musewearables.viewmodel.MainUIState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -59,6 +66,19 @@ class CategoryScreen(private val navController: NavHostController,
     override fun Content() {
 
         val context = LocalContext.current
+
+        var searchterm by remember { mutableStateOf(EMPTY_STRING) }
+
+        val cartCount by remember { mutableIntStateOf(uiState.totalCartCount) }
+
+        LaunchedEffect(key1 = Unit) {
+            onEvent(MainEvent.GetTotalCartCount)
+        }
+
+        LaunchedEffect(key1 = searchterm) {
+            delay(300)//Debouncing
+            onEvent(MainEvent.SearchCategories(searchterm))
+        }
 
         if (uiState.isGetCategoriesSuccess == true) {
             onEvent(MainEvent.SetIdealEvent)
@@ -104,8 +124,8 @@ class CategoryScreen(private val navController: NavHostController,
 
                 Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._12sdp)))
 
-                OutlinedTextField(value = "",
-                    onValueChange = {},
+                OutlinedTextField(value = searchterm,
+                    onValueChange = {searchterm = it},
                     leadingIcon = { Icon(imageVector = Icons.Outlined.Search, contentDescription = null) },
                     placeholder = { Text(text = "Search") },
                     colors = OutlinedTextFieldDefaults.colors(
@@ -141,7 +161,7 @@ class CategoryScreen(private val navController: NavHostController,
 
             }
 
-            BottomNav(navController = navController, backgroundColor = BackgroundColor)
+            BottomNav(navController = navController, backgroundColor = BackgroundColor, cartCount= cartCount)
 
         }
 
