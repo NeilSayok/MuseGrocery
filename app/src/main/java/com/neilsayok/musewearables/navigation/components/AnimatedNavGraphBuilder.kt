@@ -1,13 +1,9 @@
 package com.neilsayok.musewearables.navigation.components
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.dialog
-
 import com.neilsayok.musewearables.base.Screen
 
 class AnimatedNavGraphBuilder(private val builder: NavGraphBuilder) {

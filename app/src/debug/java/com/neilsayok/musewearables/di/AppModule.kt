@@ -8,7 +8,6 @@ import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.neilsayok.musewearables.BuildConfig
 import com.neilsayok.musewearables.data.error.ErrorEventData
 import com.neilsayok.musewearables.data.error.Resource
-import com.neilsayok.musewearables.data.model.Cart
 import com.neilsayok.musewearables.domain.repo.MainRepo
 import com.neilsayok.musewearables.domain.services.ApiInterface
 import com.neilsayok.musewearables.domain.services.AppDatabase

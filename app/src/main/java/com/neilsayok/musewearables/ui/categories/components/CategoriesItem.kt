@@ -18,7 +18,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.neilsayok.musewearables.data.constants.EMPTY_STRING
-import com.neilsayok.musewearables.data.model.GetCategoriesResponse
 import com.neilsayok.musewearables.data.model.GetCategoriesResponse.GetCategoriesResponseItem
 import com.neilsayok.musewearables.theme.Black
 import com.neilsayok.musewearables.utils.FontRoboto

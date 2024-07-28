@@ -1,10 +1,10 @@
 package com.neilsayok.musewearables.data.model
 
 
-import com.google.gson.annotations.SerializedName
-import androidx.annotation.Keep
-import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
+import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 class GetCategoriesResponse : ArrayList<GetCategoriesResponse.GetCategoriesResponseItem>() {
     @Keep

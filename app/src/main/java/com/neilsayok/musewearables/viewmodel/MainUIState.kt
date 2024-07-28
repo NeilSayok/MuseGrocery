@@ -3,9 +3,8 @@ package com.neilsayok.musewearables.viewmodel
 import com.neilsayok.musewearables.data.constants.EMPTY_STRING
 import com.neilsayok.musewearables.data.error.Resource
 import com.neilsayok.musewearables.data.model.GetCategoriesResponse
-import com.neilsayok.musewearables.data.model.GetCategoriesResponse.*
+import com.neilsayok.musewearables.data.model.GetCategoriesResponse.GetCategoriesResponseItem
 import com.neilsayok.musewearables.data.model.GetCategoryByTypeResponse
-import com.neilsayok.musewearables.data.model.GetCategoryByTypeResponse.*
 import com.neilsayok.musewearables.data.model.GetCategoryByTypeResponseItem
 import kotlinx.coroutines.flow.MutableStateFlow
 
