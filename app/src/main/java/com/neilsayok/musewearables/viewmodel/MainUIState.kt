@@ -6,6 +6,7 @@ import com.neilsayok.musewearables.data.model.GetCategoriesResponse
 import com.neilsayok.musewearables.data.model.GetCategoriesResponse.*
 import com.neilsayok.musewearables.data.model.GetCategoryByTypeResponse
 import com.neilsayok.musewearables.data.model.GetCategoryByTypeResponse.*
+import com.neilsayok.musewearables.data.model.GetCategoryByTypeResponseItem
 import kotlinx.coroutines.flow.MutableStateFlow
 
 data class MainUIState(
@@ -27,6 +28,10 @@ data class MainUIState(
 
     //Flow Data
     val selectedCategory : GetCategoriesResponseItem? = null,
-    val selectedPLPItem : GetCategoryByTypeResponseItem? = null
+    val selectedPLPItem : GetCategoryByTypeResponseItem? = null,
+
+    val totalCartCount : String = EMPTY_STRING,
+    val cartCount : Int = 0,
+    val isLiked : Boolean = false,
 
     )

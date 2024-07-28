@@ -16,6 +16,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
@@ -31,11 +33,10 @@ import androidx.navigation.NavHostController
 import com.neilsayok.musewearables.R
 import com.neilsayok.musewearables.base.Screen
 import com.neilsayok.musewearables.data.constants.EMPTY_STRING
-import com.neilsayok.musewearables.data.model.GetCategoryByTypeResponse
 import com.neilsayok.musewearables.theme.Black
 import com.neilsayok.musewearables.theme.Tertiary
+import com.neilsayok.musewearables.ui.common.AddToCartButton
 import com.neilsayok.musewearables.ui.common.NoToolBar
-import com.neilsayok.musewearables.ui.common.PrimaryButton
 import com.neilsayok.musewearables.ui.common.SecondaryButton
 import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.fontDimensionResource
@@ -56,7 +57,20 @@ class PDPScreen(
 
     @Composable
     override fun Content() {
+
         val item  = uiState.selectedPLPItem
+
+        LaunchedEffect(Unit) {
+            item?.let {
+                onEvent(MainEvent.GetCartCountForItem(item))
+                onEvent(MainEvent.IsItemLikedLike(item))
+            }
+
+        }
+
+
+        val isItemLiked = uiState.isLiked
+        val cartCount = uiState.cartCount
 
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
 
@@ -162,19 +176,30 @@ class PDPScreen(
 
                     Spacer(modifier = Modifier.height(6.dp))
 
-                    Row {
-                        SecondaryButton(onClick = { /*TODO*/ }, modifier = Modifier.weight(1f)) {
-                            Icon(painter = painterResource(id = R.drawable.ic_heart_outline), contentDescription = null)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        SecondaryButton(onClick = {
+                            item?.let {
+                                onEvent(MainEvent.PressLike(item))
+                            }
+                        }, modifier = Modifier.weight(1f)) {
+                            Icon(
+                                painter = if (isItemLiked) painterResource(id = R.drawable.ic_heart_filled)
+                                else painterResource(id = R.drawable.ic_heart_outline),
+                                contentDescription = null
+                            )
                         }
                         Spacer(modifier = Modifier.width(16.dp))
-                        PrimaryButton(onClick = { /*TODO*/ },modifier = Modifier.weight(3f)) {
-                            Row {
-                                Icon(painter = painterResource(id = R.drawable.shopping_cart), contentDescription = null)
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Text(text = "ADD TO CART")
-                            }
 
-                        }
+                        AddToCartButton(cartCount = cartCount, onIncreaseClick = {
+                            item?.let {
+                                onEvent(MainEvent.IncreaseItemInCart(it))
+                            }
+                        }, onDecreaseClick = {
+                            item?.let {
+                                onEvent(MainEvent.DecreaseItemInCart(it))
+                            }
+                        }, modifier = Modifier.weight(3f)
+                        )
                     }
 
                 }

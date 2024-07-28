@@ -28,7 +28,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.neilsayok.musewearables.data.constants.EMPTY_STRING
 import com.neilsayok.musewearables.data.model.GetCategoryByTypeResponse
-import com.neilsayok.musewearables.data.model.GetCategoryByTypeResponse.GetCategoryByTypeResponseItem
+import com.neilsayok.musewearables.data.model.GetCategoryByTypeResponseItem
 import com.neilsayok.musewearables.theme.Black
 import com.neilsayok.musewearables.utils.FontRoboto
 import com.neilsayok.musewearables.utils.fontDimensionResource

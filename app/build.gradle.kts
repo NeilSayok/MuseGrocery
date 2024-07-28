@@ -183,6 +183,10 @@ dependencies {
     //Payment
     implementation (libs.stripe.android)
 
+    //Room
+    implementation( libs.androidx.room.runtime)
+    implementation (libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
 
     //test
     testImplementation(libs.junit)

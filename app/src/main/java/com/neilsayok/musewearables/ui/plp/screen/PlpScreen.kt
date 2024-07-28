@@ -80,6 +80,7 @@ class PlpScreen(
 
         LaunchedEffect(Unit) {
             onEvent(MainEvent.GetCategoriesByTypeEvent)
+            onEvent(MainEvent.CleanPDPEvent)
         }
 
 
@@ -143,7 +144,6 @@ class PlpScreen(
     }
 
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Toolbar() {
 

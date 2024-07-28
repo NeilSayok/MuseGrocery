@@ -1,14 +1,19 @@
 package com.neilsayok.musewearables.di
 
 import android.content.Context
+import androidx.room.Room
 import com.facebook.flipper.android.AndroidFlipperClient
 import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.neilsayok.musewearables.BuildConfig
 import com.neilsayok.musewearables.data.error.ErrorEventData
 import com.neilsayok.musewearables.data.error.Resource
-import com.neilsayok.musewearables.domain.MainRepo
+import com.neilsayok.musewearables.data.model.Cart
+import com.neilsayok.musewearables.domain.repo.MainRepo
 import com.neilsayok.musewearables.domain.services.ApiInterface
+import com.neilsayok.musewearables.domain.services.AppDatabase
+import com.neilsayok.musewearables.domain.services.CartDao
+import com.neilsayok.musewearables.domain.services.LikeDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -79,6 +84,25 @@ object AppModule {
     @Singleton
     @Provides
     fun providesMainRepo(apiInterface: ApiInterface) = MainRepo(apiInterface)
+
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, "MyDatabase").build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserDao(database: AppDatabase): CartDao {
+        return database.cartDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideLikeDao(database: AppDatabase): LikeDao {
+        return database.likeDao()
+    }
 
 
 
