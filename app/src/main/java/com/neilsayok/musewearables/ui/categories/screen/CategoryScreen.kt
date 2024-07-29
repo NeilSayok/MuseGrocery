@@ -171,7 +171,6 @@ class CategoryScreen(private val navController: NavHostController,
 
     @Composable
     override fun Toolbar() {
-
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier

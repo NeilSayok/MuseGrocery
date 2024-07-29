@@ -118,7 +118,11 @@ class ThankYouScreen(
                     Spacer(modifier = Modifier.height(dimensionResource(id = com.intuit.sdp.R.dimen._64sdp)))
 
                     PrimaryButton(
-                        onClick = { navHostController.navigate(Routes.CategoryScreen.path) },
+                        onClick = { navHostController.navigate(Routes.CategoryScreen.path){
+                            popUpTo(Routes.CategoryScreen.path){
+                                inclusive = true
+                            }
+                        } },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
