@@ -24,7 +24,7 @@ Below are the screen shots:
 | <img src="https://neilsayok.github.io/imagelib/images/projects/mu_grocery/page8.jpeg" style="height:400px;"/> |
 | <img src="https://neilsayok.github.io/imagelib/images/projects/mu_grocery/page9.jpeg" style="height:400px;"/> |
 
-| Table Name | Screen Shots                                                                                                |
-|------------|-------------------------------------------------------------------------------------------------------------|
-| Cart       | <img src="https://neilsayok.github.io/imagelib/images/projects/mu_grocery/db1.jpeg" style="width:400px;"/>  |
-| Likes      | <img src="https://neilsayok.github.io/imagelib/images/projects/mu_grocery/db2.jpeg" style="width:400px;"/> |
+| Table Name | Screen Shots                                                                                              |
+|------------|-----------------------------------------------------------------------------------------------------------|
+| Cart       | <img src="https://neilsayok.github.io/imagelib/images/projects/mu_grocery/db1.png" style="width:400px;"/> |
+| Likes      | <img src="https://neilsayok.github.io/imagelib/images/projects/mu_grocery/db2.png" style="width:400px;"/> |
