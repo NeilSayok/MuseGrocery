@@ -5,7 +5,7 @@ A small grocery app.
 Below is the video of the app:
 
 <a href="https://neilsayok.github.io/imagelib/images/projects/mu_grocery/mu_grocery.mp4" target="_blank">
-    <img src="https://neilsayok.github.io/imagelib/images/projects/mu_grocery/vid.png" style="height:400px;"/>
+    <img src="https://neilsayok.github.io/imagelib/images/projects/mu_grocery/vid.png" style="height:400px;" alt="Video"/>
 </a>
 
 
